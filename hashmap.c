@@ -36,6 +36,9 @@ HashMap *create_hashmap(size_t key_size)
 
 void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback resolve_collision)
 {
+	if (hm==NULL) {
+		return;
+	}
 	int hash_value = hash(hm, key);
 	// if this hash was never used, initialize the bucket
 	if (!hm->buckets[hash_value])
@@ -74,6 +77,9 @@ void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback re
 
 void *get_data(HashMap *hm, char *key)
 {
+	if (hm==NULL) {
+		return NULL;
+	}
 	int hash_value = hash(hm, key);
 	//if the bucket exists(if not, clearly nothing got added)
 	if (hm->buckets[hash_value])
@@ -97,6 +103,9 @@ void *get_data(HashMap *hm, char *key)
 
 void iterate(HashMap *hm, void (*callback)(char *key, void *data))
 {
+	if (hm==NULL) {
+		return;
+	}
 	//iterate through each list of buckets
 	for (size_t i = 0; i < hm->size; i++)
 	{
@@ -115,6 +124,9 @@ void iterate(HashMap *hm, void (*callback)(char *key, void *data))
 
 void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data)
 {
+	if (hm==NULL) {
+		return;
+	}
 	//find the bucket
 	int hash_value = hash(hm, key);
 	if (hm->buckets[hash_value])
@@ -154,6 +166,9 @@ void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data)
 
 void delete_hashmap(HashMap *hm, DestroyDataCallback destroy_data)
 {
+	if (hm==NULL) {
+		return;
+	}
 	for (size_t i = 0; i < hm->size; i++)
 	{
 		//if a bucket has been created at an index, iterate through it
